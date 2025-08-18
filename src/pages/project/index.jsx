@@ -22,16 +22,7 @@ const Project = () => {
   };
 
   const projects = [
-    {
-      name: "blue bilgisayar",
-      link: "https://bluebilgisayar.com.tr/",
-      gradient: getRandomGradient()
-    },
-    {
-      name: "koska tarım",
-      link: "https://koskatarim.net/",
-      gradient: getRandomGradient()
-    },
+    
     {
       name: "blog projesi",
       link: "https://github.com/furkanh7/BlogProject",
