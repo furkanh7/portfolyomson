@@ -1,65 +1,84 @@
-import React, { useEffect, useState } from 'react'
-import photo1 from '../../assets/images/photo1.jpg';
+import React from 'react';
+import photo from '../../assets/images/profile.jpg';
 
 import Title from '../../components/ui/Title';
-import {HiDownload} from 'react-icons/hi'
+import { HiDownload } from 'react-icons/hi';
 
-const Index = () => {
+const skills = [
+  '.net',
+  'mssql',
+  'c#',
+  '.net core',
+  'redis',
+  'docker',
+  'python',
+  'api',
+  'c++',
+  'postgresql',
+  'mvc',
+  'git&github',
+];
 
-  const photos = [photo1];
-  const [currentPhoto, setCurrentPhoto] = useState(0);
+const About = () => (
+  <div>
+    <Title>benim hakkımda</Title>
 
-  const skills = [".net","mssql","c#",".net core","redis","docker",
-          "python","api","c++","postgresql","mvc","git&github"];
+    <div className='mt-6 flex flex-wrap-reverse gap-6'>
+      <div className='md:flex-1'>
+        <p className='text-lg font-light leading-relaxed'>
+          merhaba, ben furkan. backend geliştirme alanında uzmanlaşmaya çalışan bir
+          yazılımcıyım. izmir'de yaşıyorum ve sürekli yeni teknolojiler öğrenerek kendimi
+          geliştiriyorum.
+        </p>
 
-  return (
-    <div>
-        <Title>benim hakkımda</Title>
-        <br />
-        {/* Content section with photo */}
-        <div className='flex flex-wrap-reverse mt-4 gap-6'>
-          <div className='md:flex-1'>
-            <p className='font-light text-lg'>merhaba, ben furkan. backend geliştirme alanında uzmanlaşmaya çalışan bir yazılımcıyım. izmir’de yaşıyorum ve sürekli yeni teknolojiler öğrenerek kendimi geliştiriyorum.
-            </p>
-            <div className='mt-4 p-1 border bg-gray-100 inline-block text-blue-400 dark:text-black sm:text-sm text-sm rounded-lg shadow-md'>
-              <a href="/furkan_hilaloglu_CV.pdf" target="_blank" rel="noopener noreferrer">
-                  <div className='flex gap-2 items-center'>
-                    <HiDownload />
-                    cv'mi görüntüle
-                  </div>
-              </a>
-            </div>
-          </div>
-          <div className='md:w-48 w-40'>
-            <div className='w-40 h-40 md:w-48 md:h-48 p-1 border shadow-lg rounded-full'>
-              <div className='rounded-full overflow-hidden w-full h-full'>
-                <img
-                  src={photos[currentPhoto]}
-                  alt="Furkan Hilaloğlu"
-                  className='object-cover w-full h-full'
-                />
-              </div>
-            </div>
+        <a
+          href='/furkan_hilaloglu_CV.pdf'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='mt-4 inline-block rounded-lg border border-gray-300 bg-gray-50 p-2
+            text-sm text-blue-600 shadow-md transition-colors hover:bg-gray-100
+            focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400
+            dark:border-gray-600 dark:bg-gray-700 dark:text-blue-400
+            dark:hover:bg-gray-600'
+        >
+          <span className='flex items-center gap-2'>
+            <HiDownload />
+            cv'mi görüntüle
+          </span>
+        </a>
+      </div>
+
+      <div className='w-40 md:w-48'>
+        <div className='h-40 w-40 rounded-full border border-gray-200 p-1 shadow-lg
+          md:h-48 md:w-48 dark:border-gray-600'>
+          <div className='h-full w-full overflow-hidden rounded-full'>
+            <img
+              src={photo}
+              alt='Furkan Hilaloğlu portre fotoğrafı'
+              loading='lazy'
+              className='h-full w-full object-cover'
+            />
           </div>
         </div>
-
-        <div className='mt-6'>
-
-          <div>
-              <Title>yeteneklerim</Title>
-              <div className='mt-4 grid grid-cols-3 gap-2'>
-                  {
-                    skills.map((skill,i) => (
-                      <span className='border md:text-xs text-sm border-black dark:border-white text-center
-                      py-1 px-2 rounded-md hover:bg-gray-800 hover:text-white transition-colors'
-                      key={i}>{skill}</span>
-                    ))
-                  }
-              </div>
-          </div>
-        </div>
+      </div>
     </div>
-  )
-}
 
-export default Index
+    <div className='mt-6'>
+      <Title>yeteneklerim</Title>
+      <div className='mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3'>
+        {skills.map((skill) => (
+          <span
+            key={skill}
+            className='rounded-md border border-gray-800 px-2 py-1 text-center text-sm
+              transition-colors hover:bg-gray-800 hover:text-white md:text-xs
+              dark:border-gray-400 dark:hover:bg-white dark:hover:text-black'
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+export default About;

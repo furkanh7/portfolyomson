@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Yönlendiriliyor… — Furkan Hilaloğlu</title>
+    <script>
+      /*
+        GitHub Pages tek sayfalık uygulamalarda /projects, /contact gibi
+        adresleri sunucuda bulamayıp bu dosyayı 404 ile döndürüyor.
+        Burada istenen adresi ?redirect= parametresine koyup kök adrese
+        gidiyoruz; index.html içindeki eş script adres çubuğunu geri yazıyor,
+        böylece react-router doğru sayfayı açıyor.
+      */
+      (function () {
+        var target =
+          window.location.pathname + window.location.search + window.location.hash;
+        window.location.replace(
+          '/?redirect=' + encodeURIComponent(target)
+        );
+      })();
+    </script>
+  </head>
+  <body>
+    <p>
+      Yönlendiriliyorsunuz…
+      <a href="/">Ana sayfaya git</a>
+    </p>
+  </body>
+</html>

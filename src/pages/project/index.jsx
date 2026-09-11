@@ -1,75 +1,124 @@
-import React from 'react'
-import Title from '../../components/ui/Title'
+import React from 'react';
+import Title from '../../components/ui/Title';
+import { BsGithub } from 'react-icons/bs';
+import { HiOutlineExternalLink } from 'react-icons/hi';
+import { FiTool } from 'react-icons/fi';
 
-const Project = () => {
-  // Gradient renk kombinasyonları
-  const gradients = [
-    'from-orange-500 to-red-500',       // Turuncu -> Kırmızı
-    'from-emerald-400 to-cyan-500',     // Zümrüt -> Camgöbeği
-    'from-indigo-500 to-purple-500',    // İndigo -> Mor
-    'from-yellow-400 to-amber-500',     // Sarı -> Kehribar
-    'from-teal-400 to-blue-600',        // Turkuaz -> Koyu Mavi
-    'from-rose-400 to-pink-600',        // Gül -> Pembe
-    'from-lime-400 to-green-600',       // Açık Yeşil -> Koyu Yeşil
-    'from-violet-500 to-fuchsia-500',   // Menekşe -> Fuşya
-    'from-sky-400 to-indigo-600',       // Gök Mavisi -> Lacivert
-    'from-amber-400 to-orange-600'      // Kehribar -> Koyu Turuncu
+/*
+  Renkler proje sırasına göre sabit. Daha önce her render'da Math.random()
+  ile seçildiği için kart renkleri sayfa yeniden çizildikçe değişiyordu.
+*/
+const gradients = [
+  'from-indigo-500 to-purple-500',
+  'from-emerald-400 to-cyan-500',
+  'from-orange-500 to-red-500',
+  'from-teal-400 to-blue-600',
+  'from-rose-400 to-pink-600',
+  'from-violet-500 to-fuchsia-500',
+  'from-sky-400 to-indigo-600',
+  'from-amber-400 to-orange-600',
 ];
-  // Her proje için random gradient seçme fonksiyonu
-  const getRandomGradient = () => {
-    const randomIndex = Math.floor(Math.random() * gradients.length);
-    return gradients[randomIndex];
-  };
 
-  const projects = [
-    
-    {
-      name: "blog projesi",
-      link: "https://github.com/furkanh7/BlogProject",
-      gradient: getRandomGradient()
-    },
-    {
-      name: "acun medya festival",
-      link: "https://github.com/furkanh7/AcunMedyaAkademiFestival",
-      gradient: getRandomGradient()
-    },
-    {
-      name: "otel projesi",
-      link: "https://github.com/furkanh7/HotelProject",
-      gradient: getRandomGradient()
-    },
-    {
-      name: "bookdemo api",
-      link: "https://github.com/furkanh7/BookDemo_Api",
-      gradient: getRandomGradient()
-    }
-  ];
+/* link yoksa proje yapım aşamasında sayılır */
+const projects = [
+  {
+    name: 'usepost-it',
+    description: 'notlarını, fikirlerini ve projelerini organize eden retro pixel tasarımlı web uygulaması',
+    link: 'https://usepost-it.com',
+  },
+  {
+    name: 'bond',
+    description: 'yapım aşamasında olan uygulamam, yakında burada',
+  },
+  {
+    name: 'blog projesi',
+    link: 'https://github.com/furkanh7/BlogProject',
+  },
+  {
+    name: 'acun medya festival',
+    link: 'https://github.com/furkanh7/AcunMedyaAkademiFestival',
+  },
+  {
+    name: 'otel projesi',
+    link: 'https://github.com/furkanh7/HotelProject',
+  },
+];
+
+const CardBody = ({ project }) => {
+  const isGithub = project.link?.includes('github.com');
+  const Icon = project.link ? (isGithub ? BsGithub : HiOutlineExternalLink) : FiTool;
+  const label = project.link
+    ? isGithub
+      ? "github'da gör"
+      : 'siteye git'
+    : 'yapım aşamasında';
 
   return (
-    <div>
-      <Title>projelerim</Title>
-      <div className='grid md:grid-cols-2 grid-cols-1 gap-4 mt-4'>
-          {
-            projects.map((project, i) => (
-              <a href={project.link} key={i} target="_blank" rel="noopener noreferrer">
-                <div className={`border p-4 cursor-pointer shadow-lg 
-                  bg-gradient-to-r ${project.gradient}
-                  dark:bg-gradient-to-r dark:border-gray-700 dark:opacity-90
-                  rounded-xl hover:scale-105 transition-all h-[100px]
-                  group`}>
-                  <h4 className='font-semibold border-b border-white/20 
-                    inline-block mb-2 sm:text-xl text-lg text-white'>{project.name}</h4>
-                  <p className='text-white font-semibold flex justify-end 
-                    group-hover:translate-x-2 transition-transform'>
-                    siteye git
-                  </p>
-                </div>
-              </a>
-            ))
-          }
+    <>
+      <div>
+        <h4 className='inline-block border-b border-white/20 text-lg font-semibold
+          text-white sm:text-xl'>
+          {project.name}
+        </h4>
+        {project.description && (
+          <p className='mt-1 text-xs font-light leading-snug text-white/90'>
+            {project.description}
+          </p>
+        )}
       </div>
-    </div>
-  )
-}
+      <p
+        className={`mt-2 flex items-center justify-end gap-1 text-sm font-semibold
+          text-white ${project.link ? 'transition-transform group-hover:translate-x-2' : ''}`}
+      >
+        <Icon />
+        {label}
+      </p>
+    </>
+  );
+};
 
-export default Project
+const Project = () => (
+  <div>
+    <Title>projelerim</Title>
+    <div className='mt-4 grid grid-cols-1 gap-4 md:grid-cols-2'>
+      {projects.map((project, i) => {
+        const gradient = gradients[i % gradients.length];
+
+        /* yapım aşamasındaki proje tıklanabilir değil: <a> yerine <div> */
+        if (!project.link) {
+          return (
+            <div
+              key={project.name}
+              className={`flex min-h-[100px] flex-col justify-between rounded-xl border-2
+                border-dashed border-white/40 bg-gradient-to-r ${gradient} p-4
+                opacity-80 shadow-lg`}
+            >
+              <CardBody project={project} />
+            </div>
+          );
+        }
+
+        return (
+          <a
+            href={project.link}
+            key={project.name}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='rounded-xl focus:outline-none focus-visible:ring-2
+              focus-visible:ring-gray-400'
+          >
+            <div
+              className={`group flex h-full min-h-[100px] cursor-pointer flex-col
+                justify-between rounded-xl bg-gradient-to-r ${gradient} p-4 shadow-lg
+                transition-transform hover:scale-105`}
+            >
+              <CardBody project={project} />
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+);
+
+export default Project;

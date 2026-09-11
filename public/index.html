@@ -1,23 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="/man.png" />
-  
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+
+    <title>Furkan Hilaloğlu — Backend Yazılım Geliştirici</title>
     <meta
       name="description"
-      content="furkan"
+      content="Furkan Hilaloğlu — İzmir'de yaşayan backend yazılım geliştirici. .NET Core, C#, MSSQL, PostgreSQL ve Docker ile API ve web uygulamaları geliştiriyorum."
     />
-     <link rel="icon" type="image/png" href="/man.png" />
-   
+    <meta name="author" content="Furkan Hilaloğlu" />
+    <link rel="canonical" href="https://furkanhilaloglu.com/" />
 
-    <title>furkan</title>
+    <!-- tema rengi: açık/koyu moda göre -->
+    <meta name="theme-color" content="#e5e7eb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)" />
+
+    <!-- fontlar: sadece kullanılan Poppins ağırlıkları -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ikonlar -->
+    <link rel="icon" type="image/png" href="/man.png" />
+    <link rel="apple-touch-icon" href="/man.png" />
+
+    <!-- link paylaşımında görünen önizleme (Open Graph) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Furkan Hilaloğlu" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:url" content="https://furkanhilaloglu.com/" />
+    <meta property="og:title" content="Furkan Hilaloğlu — Backend Yazılım Geliştirici" />
+    <meta
+      property="og:description"
+      content="İzmir'de yaşayan backend yazılım geliştirici. .NET Core, C#, MSSQL, PostgreSQL ve Docker ile API ve web uygulamaları geliştiriyorum."
+    />
+    <meta property="og:image" content="https://furkanhilaloglu.com/man.png" />
+
+    <!-- twitter kartı -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Furkan Hilaloğlu — Backend Yazılım Geliştirici" />
+    <meta
+      name="twitter:description"
+      content="İzmir'de yaşayan backend yazılım geliştirici. .NET Core, C#, MSSQL, PostgreSQL ve Docker ile API ve web uygulamaları geliştiriyorum."
+    />
+    <meta name="twitter:image" content="https://furkanhilaloglu.com/man.png" />
+
+    <!--
+      Tema, React yüklenmeden önce uygulanır. Bu olmadan koyu modda
+      sayfa bir an beyaz yanıp sönüyordu (flash of wrong theme).
+    -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var prefersDark =
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (saved === 'dark' || (!saved && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {
+          /* localStorage kapalıysa açık temada kal */
+        }
+      })();
+    </script>
+
+    <!--
+      GitHub Pages statik sunum yaptığı için /projects gibi adresler
+      sunucuda yok ve 404 dönüyordu. 404.html o adresi ?redirect= olarak
+      buraya yönlendiriyor, aşağıdaki satır da adres çubuğunu düzeltip
+      react-router'ın devralmasını sağlıyor.
+    -->
+    <script>
+      (function () {
+        var redirect = new URLSearchParams(window.location.search).get('redirect');
+        if (redirect) {
+          history.replaceState(null, '', redirect);
+        }
+      })();
+    </script>
   </head>
   <body>
-    <noscript>F</noscript>
+    <noscript>
+      Bu siteyi görüntülemek için JavaScript'i etkinleştirmeniz gerekiyor.
+      Bana furkanhilaloglu9@gmail.com adresinden ulaşabilirsiniz.
+    </noscript>
     <div id="root"></div>
-
   </body>
 </html>

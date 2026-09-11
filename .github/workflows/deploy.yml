@@ -2,7 +2,7 @@ name: Deploy React to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -24,16 +24,20 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
+          cache: npm
 
       - name: Install dependencies
-        run: npm ci || npm install
+        run: npm ci
 
       - name: Build
         run: npm run build
         env:
+          # CRA uyarıları CI'da hata sayar; uyarı yüzünden deploy düşmesin.
           CI: false
 
+      # public/CNAME build çıktısına kopyalanır, böylece özel domain
+      # yalnızca repo ayarlarına bağlı kalmaz.
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

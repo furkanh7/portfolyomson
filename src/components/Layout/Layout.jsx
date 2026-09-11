@@ -1,77 +1,107 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react';
 import { SlSocialInstagram } from 'react-icons/sl';
+import { BsGithub } from 'react-icons/bs';
+import { AiFillLinkedin } from 'react-icons/ai';
+import { FaSun, FaMoon } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Navbar from '../navbar/Navbar';
-import { FaSun, FaMoon } from 'react-icons/fa';
+import useTheme from '../../hooks/useTheme';
 
-const Layout = ({children}) => {
-  const [isDark, setIsDark] = useState(false);
+const socials = [
+  {
+    label: '@furkanhilalogluu',
+    href: 'https://www.instagram.com/furkanhilalogluu/',
+    icon: SlSocialInstagram,
+    name: 'Instagram',
+  },
+  {
+    label: 'furkanh7',
+    href: 'https://github.com/furkanh7',
+    icon: BsGithub,
+    name: 'GitHub',
+  },
+  {
+    label: 'furkanhilaloglu',
+    href: 'https://www.linkedin.com/in/furkanhilaloglu/',
+    icon: AiFillLinkedin,
+    name: 'LinkedIn',
+  },
+];
+
+const Layout = ({ children }) => {
+  const { isDark, toggleTheme } = useTheme();
 
   return (
-    <div className={`border mx-auto sm:my-20 my-5 rounded-2xl shadow-2xl 
-      md:max-w-2xl sm:max-w-lg max-w-sm ${isDark ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black'}`}>
-        <div className='p-10 w-full'>
-            {/* header */}
-            <div className='flex flex-col gap-0'>
-              <div className='flex items-center justify-between py-2'>
-                <div className='flex flex-col'>
-                  <h4 className='sm:text-3xl text-lg select-none drop-shadow-lg'>furkan hilaloğlu</h4>
-                  <span className='font-extralight sm:text-xl text-base ml-1 mt-0'>- yazılım geliştirici</span>
-                </div>
-                <button
-                  onClick={() => {
-                    setIsDark(!isDark);
-                    if (!isDark) {
-                      document.documentElement.classList.add('dark');
-                      localStorage.setItem('theme', 'dark');
-                    } else {
-                      document.documentElement.classList.remove('dark');
-                      localStorage.setItem('theme', 'light');
-                    }
-                  }}
-                  className={`p-2 rounded-full transition-colors ${
-                    isDark 
-                      ? 'bg-gray-700 hover:bg-gray-600' 
-                      : 'bg-gray-100 hover:bg-gray-200'
-                  }`}
-                  aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-                >
-                  {isDark ? <FaSun size={24} className="text-white" /> : <FaMoon size={24} className="text-gray-700" />}
-                </button>
-              </div>
-            </div>
-            <div className={`border-b mt-4 ${isDark ? 'border-gray-700' : ''}`}></div>
-              
-            {/* navbar */}
-            <Navbar isDark={isDark} setIsDark={setIsDark} />
+    <div
+      className='mx-auto my-5 sm:my-20 w-full max-w-sm sm:max-w-lg md:max-w-2xl
+        rounded-2xl border border-gray-200 bg-white text-gray-900 shadow-xl
+        transition-colors duration-200
+        dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100'
+    >
+      <div className='w-full p-6 sm:p-10'>
+        {/* header */}
+        <div className='flex items-start justify-between gap-4 py-2'>
+          <div className='flex flex-col'>
+            <Link
+              to='/'
+              className='rounded-lg text-lg font-medium tracking-tight
+                select-none sm:text-3xl
+                focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400'
+            >
+              furkan hilaloğlu
+            </Link>
+            <span className='ml-1 text-base font-extralight text-gray-500 sm:text-xl dark:text-gray-400'>
+              - yazılım geliştirici
+            </span>
+          </div>
 
-            {/* content */}
-            <main>
-              {children}
-            </main>
-
-            <div className={`border-b my-10 ${isDark ? 'border-gray-700' : ''}`}></div>
-
-            {/* footer */}
-            <div className='flex justify-between items-center'>
-                <div className='flex items-center gap-1'>
-                  <SlSocialInstagram size={24} />
-                  <a 
-                    href="https://www.instagram.com/furkanhilalogluu/" 
-                    target='_blank'
-                    rel="noopener noreferrer"
-                    className={isDark ? 'text-white' : 'text-black'}
-                  >
-                    <span className='font-semibold text-sm'>@furkanhilalogluu</span>
-                  </a>
-                </div>
-                <span className='font-light'>
-                
-                </span>
-            </div>
+          <button
+            type='button'
+            onClick={toggleTheme}
+            className='shrink-0 rounded-full bg-gray-100 p-2 text-gray-700
+              transition-colors hover:bg-gray-200
+              focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400
+              dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600'
+            aria-label={isDark ? 'Açık temaya geç' : 'Koyu temaya geç'}
+            title={isDark ? 'Açık temaya geç' : 'Koyu temaya geç'}
+          >
+            {isDark ? <FaSun size={22} /> : <FaMoon size={22} />}
+          </button>
         </div>
-    </div>
-  )
-}
 
-export default Layout
+        <div className='mt-4 border-b border-gray-200 dark:border-gray-700' />
+
+        {/* navbar */}
+        <Navbar />
+
+        {/* content */}
+        <main>{children}</main>
+
+        <div className='my-10 border-b border-gray-200 dark:border-gray-700' />
+
+        {/* footer */}
+        <footer className='flex flex-wrap items-center gap-4'>
+          <div className='flex items-center gap-4'>
+            {socials.map(({ label, href, icon: Icon, name }) => (
+              <a
+                key={name}
+                href={href}
+                target='_blank'
+                rel='noopener noreferrer'
+                aria-label={name}
+                title={`${name}: ${label}`}
+                className='rounded-lg p-1 text-gray-700 transition-colors hover:text-gray-900
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400
+                  dark:text-gray-300 dark:hover:text-white'
+              >
+                <Icon size={22} />
+              </a>
+            ))}
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+};
+
+export default Layout;

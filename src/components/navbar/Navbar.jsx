@@ -1,78 +1,43 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
-import { FaMoon } from "react-icons/fa";
-import { FaSun } from "react-icons/fa";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-const Navbar = ({ isDark, setIsDark }) => {
-  const [active, setActive] = useState(0);
+const navs = [
+  { name: 'hakkımda', link: '/' },
+  { name: 'deneyimlerim', link: '/expertise' },
+  { name: 'projelerim', link: '/projects' },
+  { name: 'iletişim', link: '/contact' },
+];
 
-  const navs = [
-    {
-      name: "hakkımda",
-      link: "/"
-    },
-    {
-      name: "deneyimlerim",
-      link: "/expertise"
-    },
-    {
-      name: "projelerim",
-      link: "/projects"
-    },
-    {
-      name: "iletişim",
-      link: "/contact"
-    }
-  ];
+/*
+  Aktif sekme NavLink üzerinden adresten türetiliyor. Daha önce ayrı bir
+  state + window.location.pathname okumasıyla tutuluyordu ve tarayıcının
+  geri/ileri tuşlarında yanlış sekme işaretli kalıyordu.
+*/
+const Navbar = () => (
+  <nav className='mt-6'>
+    <ul className='flex w-full flex-wrap items-center justify-center gap-x-1 gap-y-1 sm:gap-x-3'>
+      {navs.map((nav) => (
+        <li key={nav.link}>
+          <NavLink
+            to={nav.link}
+            end={nav.link === '/'}
+            className={({ isActive }) =>
+              `block cursor-pointer rounded-3xl px-3 py-2 text-sm transition-colors
+              sm:px-4 sm:text-lg
+              focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400
+              ${
+                isActive
+                  ? 'bg-black text-white dark:bg-white dark:text-black'
+                  : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+              }`
+            }
+          >
+            {nav.name}
+          </NavLink>
+        </li>
+      ))}
+    </ul>
+  </nav>
+);
 
-  useEffect(() => {
-    const currentPath = window.location.pathname;
-    const activeIndex = navs.findIndex(nav => nav.link === currentPath);
-    setActive(activeIndex >= 0 ? activeIndex : 0);
-  }, [window.location.pathname]);
-
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      setIsDark(true);
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    if (!isDark) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  };
-
-  return (
-    <div className='mt-6'>
-      <div className='flex justify-between items-center'>
-        <ul className='flex flex-wrap gap-x-1 sm:gap-x-4 items-center w-full justify-center overflow-x-auto'>
-          {navs.map((nav, i) => (
-            <Link to={nav.link} key={i}>
-              <li
-                className={`rounded-3xl px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-lg cursor-pointer ${
-                  active === i 
-                    ? (isDark ? 'bg-white text-black' : 'bg-black text-white')
-                    : (isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100')
-                }`}
-                onClick={() => setActive(i)}
-              >
-                {nav.name}
-              </li>
-            </Link>
-          ))}
-        </ul>
-      </div>
-    </div>
-  )
-}
-
-export default Navbar
+export default Navbar;

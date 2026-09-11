@@ -2,17 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@200;300;500;600;700;800;900&display=swap');
+/*
+  Not: Google Fonts artık public/index.html içinden <link> ile yükleniyor.
+  Buradaki @import, @tailwind çıktısının ortasına düştüğü için geçersizdi
+  (CSS @import dosyanın en başında olmak zorunda) ve font güvenilir
+  şekilde yüklenmiyordu.
 
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
+  Ayrıca eski `* { margin: 0; padding: 0; box-sizing: border-box }` bloğu
+  kaldırıldı; Tailwind'in preflight katmanı aynı sıfırlamayı yapıyor.
+*/
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    font-family: "Poppins", sans-serif;
-    @apply bg-gray-200 dark:bg-gray-900 transition-colors duration-200;
+    font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    @apply bg-gray-200 text-gray-900 transition-colors duration-200
+      dark:bg-gray-900 dark:text-gray-100;
   }
 }

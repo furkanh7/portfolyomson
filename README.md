@@ -1,72 +1,68 @@
-## Live : (https://furkanhilaloglu.com.tr)
+# furkanhilaloglu.com
 
-# Getting Started with Create React App
+Kişisel portfolyo sitem. React (Create React App) + Tailwind CSS ile yazıldı,
+GitHub Actions ile derlenip GitHub Pages üzerinde yayınlanıyor.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Canlı:** https://furkanhilaloglu.com
 
-## Available Scripts
+## Kurulum
 
-In the project directory, you can run:
+```bash
+npm install
+npm start
+```
 
-### `npm start`
+Uygulama http://localhost:3000 adresinde açılır.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+İletişim formu EmailJS kullanıyor. Kendi hesabınla denemek istersen
+`.env.example` dosyasını `.env` olarak kopyalayıp değerleri doldur; boş
+bırakırsan `src/config/emailjs.js` içindeki varsayılanlar geçerli olur.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Komutlar
 
-### `npm test`
+| Komut | Ne yapar |
+| --- | --- |
+| `npm start` | Geliştirme sunucusu |
+| `npm run build` | `build/` klasörüne production derlemesi |
+| `npm test` | Testleri izleme modunda çalıştırır |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Yayınlama
 
-### `npm run build`
+`main` dalına her push, [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
+iş akışını tetikler: proje derlenir ve `build/` klasörü GitHub Pages'e yüklenir.
+Elle tetiklemek için Actions sekmesinden **Run workflow** kullanılabilir.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Özel domain
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Domain GoDaddy'de kayıtlı, DNS kayıtları GitHub Pages'e bakıyor:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| Tür | Ad | Değer |
+| --- | --- | --- |
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+| CNAME | `www` | `furkanh7.github.io` |
 
-### `npm run eject`
+Domain adı [public/CNAME](public/CNAME) dosyasında tutulur. Bu dosya `public/`
+altında olmak zorunda — derleme çıktısına ancak oradan kopyalanır, repo
+kökünde kalırsa Pages'e hiç ulaşmaz.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Sayfa yönlendirmesi hakkında
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+GitHub Pages statik dosya sunduğu için `/projects` gibi adresler sunucuda
+karşılık bulmaz. [public/404.html](public/404.html) bu adresleri kök adrese
+`?redirect=` parametresiyle yönlendirir, `public/index.html` içindeki eş script
+adres çubuğunu geri yazar ve react-router doğru sayfayı açar. Yeni bir rota
+eklerken ayrıca bir şey yapmak gerekmez.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Yapı
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+public/          statik dosyalar, CNAME, 404.html, sitemap
+src/
+  components/    Layout, Navbar, ui (Button/Input/Title)
+  config/        EmailJS ayarları
+  hooks/         useTheme (açık/koyu tema)
+  pages/         about, expertise, project, contact, notFound
+```

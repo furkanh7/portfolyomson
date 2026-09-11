@@ -1,8 +1,7 @@
-// src/pages/expertise/Index.js
 
 import React, { useState } from 'react';
-import Title from '../../components/ui/Title'; // Title komponentinizin yolunu kontrol edin
-import { FiChevronDown, FiChevronUp } from 'react-icons/fi'; // İkonları import ediyoruz
+import Title from '../../components/ui/Title';
+import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
 const ExpertisePage = () => {
   // --- STATE TANIMLAMALARI ---
@@ -92,7 +91,7 @@ const ExpertisePage = () => {
             >
               {/* Tıklanabilir Başlık Alanı (Her zaman görünür) */}
               <div
-                className='cursor-pointer'
+                className='cursor-pointer rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400'
                 onClick={() => toggleWorkExpand(index)}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleWorkExpand(index); }}
                 role="button"
@@ -128,7 +127,7 @@ const ExpertisePage = () => {
             </div>
           ))
         ) : (
-          <p className='font-light text-gray-600 dark:text-gray-400'>Henüz iş deneyimi eklenmemiş.</p>
+          <p className='font-light text-gray-600 dark:text-gray-400'>henüz iş deneyimi eklenmemiş.</p>
         )}
       </div>
 
@@ -143,7 +142,7 @@ const ExpertisePage = () => {
             >
               {/* Tıklanabilir Başlık Alanı (Her zaman görünür) */}
               <div
-                className='cursor-pointer'
+                className='cursor-pointer rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400'
                 onClick={() => toggleEducationExpand(index)}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleEducationExpand(index); }}
                 role="button"
@@ -171,7 +170,7 @@ const ExpertisePage = () => {
             </div>
           ))
         ) : (
-          <p className='font-light text-gray-600 dark:text-gray-400'>Henüz eğitim bilgisi eklenmemiş.</p>
+          <p className='font-light text-gray-600 dark:text-gray-400'>henüz eğitim bilgisi eklenmemiş.</p>
         )}
       </div>
     </div>
